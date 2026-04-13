@@ -1,117 +1,768 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="banner">
-        <div class="navbar">
-            <img class="logo" src="./m.png" alt="">
-            <ul>
-                <li> <a href=""></a> About</li>
-                <li> <a href=""></a> Contact</li>
-                <li> <a href=""></a> Menu</li>
-                <li> <a href=""></a> Help</li>
-            </ul>
-            <div class="content">
-                <h1>100 YEARS OF PHANTOM</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing <br> elit. Architecto quam, omnis voluptate, facilis <br> deserunt corporis, consectetur explicabo aut doloremque natus nisi!</p>
-            </div>
-            <div class="button">
-                <button id="btn">test drive</button>
-                <button id="btn"> order</button>
-            </div>
-        </div>
-    </div>
-     <div class="card-section">
-        <div class="card-container">
-            <div class="card">
-                <h1>Lorem ipsum dolor sit amet...</h1>
-                <div class="card-tex">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, earum?</p>
-                </div>
-                <div class="card-buttons">
-                    <button>Read more</button>
-                    <button> Buy now</button>
-                </div>
-            </div>
-        </div>
-     </div>
-</body>
-</html> -->
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BMW M3 CAMPTESION</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>dep-grenfood</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, rgb(22, 94, 22) 0%, rgb(28, 58, 0) 100%);
+            min-height: 100vh;
+            padding: 1.5rem;
+            transition: background 0.2s;
+        }
+
+        /* DARK MODE (tun rejimi) uchun o'zgaruvchilar */
+        body.dark-mode {
+            background: linear-gradient(145deg, #1a1e2b 0%, #0f121c 100%);
+        }
+
+        body.dark-mode .card,
+        body.dark-mode .admin-panel,
+        body.dark-mode .day-card,
+        body.dark-mode .add-task-area {
+            background: #262b3c;
+            color: #d1ad0c;
+            border-color: #3a4055;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        body.dark-mode .task-item {
+            background: rgb(34, 70, 0);
+            border-left-color: rgb(34, 139, 34);
+        }
+
+        body.dark-mode .task-text {
+            color: #f0f0f0;
+        }
+
+        body.dark-mode input, 
+        body.dark-mode select,
+        body.dark-mode textarea {
+            background: #2f3549;
+            color: #fff;
+            border-color: #4a516b;
+        }
+
+        /* Asosiy konteyner */
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* HEADER + rejim tugmasi */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: rgba(255,255,240,0.7);
+            backdrop-filter: blur(12px);
+            padding: 1rem 2rem;
+            border-radius: 60px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+
+        body.dark-mode .header {
+            background: rgba(30,35,50,0.8);
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, rgb(14, 83, 7), rgb(43, 255, 0));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .logo p {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #fbff00;
+        }
+
+        .mode-toggle {
+            display: flex;
+            gap: 0.8rem;
+            background: #ffffffcc;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+        }
+
+        body.dark-mode .mode-toggle {
+            background: #2f3549cc;
+        }
+
+        .mode-btn {
+            background: transparent;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            transition: 0.2s;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mode-btn.active {
+            background: #6b6b6b;
+            color: white;
+            box-shadow: 0 4px 10px rgb(0, 255, 234);
+        }
+
+        /* Admin panel kartasi */
+        .admin-section {
+            margin-bottom: 2rem;
+        }
+
+        .admin-panel {
+            background: white;
+            border-radius: 2rem;
+            padding: 1.5rem;
+            /* box-shadow: 0 20px 35px rgb(0, 255, 234); */
+            transition: all 0.3s;
+            border: 1px solid rgb(0, 238, 255);
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .admin-header h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .lock-status {
+            background: #ff7300;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .password-area {
+            display: flex;
+            gap: 12px;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .password-area input {
+            flex: 2;
+            padding: 12px 20px;
+            border-radius: 60px;
+            border: 1px solid #000399;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .password-area button {
+            background: #141370;
+            border: none;
+            padding: 0 1.8rem;
+            border-radius: 60px;
+            color: rgb(30, 255, 0);
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .admin-btn {
+            background: #00b7ff;
+            color: rgb(18, 71, 18);
+            border: none;
+            padding: 10px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .admin-btn.danger {
+            background: #00b7ff;
+        }
+
+        .admin-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+        }
+
+        /* KUN REJIMI (kun tartibi) */
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.8rem;
+            margin-top: 1rem;
+        }
+
+        .day-card {
+            background: rgb(255, 187, 0);
+            border-radius: 1.8rem;
+            padding: 1.2rem;
+            /* box-shadow: 0 12px 24px rgb(208, 255, 0);cardlar orti */
+            transition: transform 0.2s;
+            border: 1px solid #00c3ff;
+        }
+
+        .day-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .day-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px dashed #609717;
+            padding-bottom: 0.5rem;
+        }
+
+        .task-list {
+            list-style: none;
+            margin: 1rem 0;
+            min-height: 180px;
+        }
+
+        .task-item {
+            background: rgb(125, 255, 0);
+            margin: 0.6rem 0;
+            padding: 0.7rem 0.9rem;
+            border-radius: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 5px solid rgb(34, 139, 34);
+            transition: 0.1s;
+        }
+
+        .task-text {
+            font-weight: 500;
+            word-break: break-word;
+            flex: 1;
+        }
+
+        .task-time {
+            font-size: 0.75rem;
+            background: #a70e0e;
+            padding: 0.2rem 0.6rem;
+            border-radius: 40px;
+            margin-left: 10px;
+            white-space: nowrap;
+        }
+
+        .delete-task {
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            color: #ff0800;
+            cursor: pointer;
+            margin-left: 10px;
+            opacity: 0.6;
+            transition: 0.2s;
+        }
+
+        .delete-task:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .add-task-area {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .add-task-area input {
+            flex: 2;
+            padding: 8px 12px;
+            border-radius: 2rem;
+            border: 1px solid #00ff80;
+            font-size: 0.85rem;
+        }
+
+        .add-task-area button {
+            background: #2a9d8f;
+            border: none;
+            color: white;
+            border-radius: 2rem;
+            padding: 0 1rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .empty-msg {
+            color: #0039f5;
+            font-style: italic;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            font-size: 0.8rem;
+            color: #a98467;
+        }
+
+        @media (max-width: 680px) {
+            body {
+                padding: 1rem;
+            }
+            .day-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="banner">
-        <div class="navbar">    
-            <img class="logo" src="/rangli.png" alt="">
-            <ul>
-                <li><a href="">Home</a></li>
-                <li><a href="">About</a></li>
-                <li><a href="">Contact</a></li>
-                <li><a href="">Help</a></li>
-            </ul>
+<div class="app-container">
+    <!-- Header + kunduz/tun rejimi -->
+    <div class="header">
+        <div class="logo">
+            <h1><i class="fas fa-hamburger"></i>grenfod</h1>
+            <p>Tez ovqat & Kun tartibi | Professional panel</p>
         </div>
-        <div class="content">
-            <h1>
-                BMW M3 CAMPTESION TURBO 
-            </h1>
-            <p>
-            Lorem ipsum, dolor sit amet consectetur <br>
-            adipisicing elit. Dolores nostrum exercitationem omnis <br>
-            soluta adipisci nihil quis iste doloremque.     
-            </p>
+        <div class="mode-toggle" id="modeToggle">
+            <button class="mode-btn" data-mode="light"><i class="fas fa-sun"></i> Kunduz</button>
+            <button class="mode-btn" data-mode="dark"><i class="fas fa-moon"></i> Tun</button>
         </div>
-        
-        <div class="buttons">
-            <button id="btn">Test drive</button>
-
-            <button id="btn">Order</button>
-        </div>
-
     </div>
 
-    <div class="card-section">
-  <div class="card-container">
-    <div class="card">
-      <h1>BMW M3 darkgreen </h1>
-      <div class="card-text">
-        <p>Lorem ipsum dolor sit amet consectetur</p>
-      </div>
-      
-      <div class="card-buttons">
-        <button>Read More</button>
-        <button>Buy Now</button>
-      </div>
+    <!-- ADMIN PANELI (parol bilan himoyalangan) -->
+    <div class="admin-section">
+        <div class="admin-panel" id="adminPanel">
+            <div class="admin-header">
+                <h2><i class="fas fa-lock"></i> Admin Boshqaruvi</h2>
+                <div class="lock-status" id="lockStatus">
+                    <i class="fas fa-lock"></i> Yopiq
+                </div>
+            </div>
+            <div id="adminContent">
+                <!-- parol so'rovi qismi -->
+                <div id="passwordGate">
+                    <div class="password-area">
+                        <input type="password" id="adminPassword" placeholder="Admin parolini kiriting (default: grenfod)">
+                        <button id="unlockBtn"><i class="fas fa-key"></i> Ochish</button>
+                    </div>
+                    <p style="font-size: 0.8rem; color: #ffffff;"><i class="fas fa-info-circle"></i> Parol: <strong>grenfod</strong></p>
+                </div>
+                <div id="adminTools" style="display: none;">
+                    <div class="admin-actions">
+                        <button id="resetAllTasksBtn" class="admin-btn danger"><i class="fas fa-trash-alt"></i> Barcha kunlarni tozalash</button>
+                        <button id="addExampleTasksBtn" class="admin-btn"><i class="fas fa-plus-circle"></i> Namunaviy rejim yuklash</button>
+                        <button id="lockAdminBtn" class="admin-btn"><i class="fas fa-sign-out-alt"></i> Chiqish & qulflash</button>
+                    </div>
+                    <p style="margin-top: 15px; font-size: 0.8rem;"><i class="fas fa-shield-alt"></i> Siz admin huquqiga egasiz. Vazifalarni qo'shish, o'chirish va global boshqarish mumkin.</p>
+                </div>
+            </div>
+        </div>
     </div>
 
-  </div>
+    <!-- KUNLIK REJIMI (kun tartibi) - 7 kun -->
+    <div class="schedule-grid" id="scheduleGrid"></div>
+    <footer>
+        <i class="fas fa-clock"></i> FastFood loyihasi — kun tartibi va parol bilan himoyalangan admin panel. Tun/kunduz rejimi mavjud.
+    </footer>
 </div>
 
+<script>
+    // --------------------------
+    // Ma'lumotlar tuzilmasi: har bir kun uchun tasks array (obyektlar: text, time)
+    // 7 kun: dushanba, seshanba, chorshanba, payshanba, juma, shanba, yakshanba
+    // --------------------------
+    const days = [
+        "hot-dog", "pita", "tovuqli lavash", "KFC", 
+        "lavash", "burger", "BIG-burger"
+    ];
+
+    // localStorage kalitlari
+    const STORAGE_KEY = "fastfood_schedule";
+    const THEME_KEY = "fastfood_theme";
+
+    // Global state
+    let scheduleData = [];     // [{ tasks: [{text, time}] }]
+    let isAdminUnlocked = false;   // admin panel qulf holati
+
+    // DOM elementlar
+    const scheduleGrid = document.getElementById("scheduleGrid");
+    const passwordGateDiv = document.getElementById("passwordGate");
+    const adminToolsDiv = document.getElementById("adminTools");
+    const lockStatusSpan = document.getElementById("lockStatus");
+    const adminPasswordInput = document.getElementById("adminPassword");
+    const unlockBtn = document.getElementById("unlockBtn");
+    const resetAllTasksBtn = document.getElementById("resetAllTasksBtn");
+    const addExampleTasksBtn = document.getElementById("addExampleTasksBtn");
+    const lockAdminBtn = document.getElementById("lockAdminBtn");
+    const modeBtns = document.querySelectorAll(".mode-btn");
+
+    // ------------------------- FUNKSIYALAR -------------------------
+    // 1. localStorage dan yuklash yoki default data
+    function loadScheduleFromStorage() {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+            try {
+                scheduleData = JSON.parse(stored);
+                // validatsiya: har bir kunda tasks array borligiga ishonch hosil qilamiz
+                if (!Array.isArray(scheduleData) || scheduleData.length !== days.length) {
+                    throw new Error("Ma'lumotlar noto'g'ri");
+                }
+                for (let i=0; i<scheduleData.length; i++) {
+                    if (!scheduleData[i].tasks) scheduleData[i].tasks = [];
+                }
+            } catch(e) {
+                setDefaultSchedule();
+            }
+        } else {
+            setDefaultSchedule();
+        }
+    }
+
+    function setDefaultSchedule() {
+        // chiroyli namuna: fastfood mavzusidagi kun tartibi
+        scheduleData = days.map((day, idx) => {
+            let tasks = [];
+            if (idx === 0) { // Dushanba
+                tasks = [
+                    { text: "Nonushta tayyorlash (burgerlar)", time: "08:00" },
+                    { text: "Menyuni yangilash", time: "10:30" },
+                    { text: "Tushlik tanaffus", time: "" }
+                ];
+            } else if (idx === 1) { // Seshanba
+                tasks = [
+                    { text: "Yetkazib berish xizmati rejasi", time: "09:00" },
+                    { text: "Yangi sous retsepti", time: "14:00" }
+                ];
+            } else if (idx === 2) { // Chorshanba
+                tasks = [
+                    { text: "Mijozlar fikrini yig'ish", time: "11:00" },
+                    { text: "Kassa hisobot", time: "16:00" }
+                ];
+            } else if (idx === 3) { // Payshanba
+                tasks = [
+                    { text: "FastFood aksiyalari", time: "12:00" },
+                    { text: "Oshxona jihozlarini tekshirish", time: "15:30" }
+                ];
+            } else if (idx === 4) { // Juma
+                tasks = [
+                    { text: "Haftalik reja yig'ilishi", time: "09:30" },
+                    { text: "Menyuga kartoshka fri qo'shish", time: "17:00" }
+                ];
+            } else if (idx === 5) { // Shanba
+                tasks = [
+                    { text: "Maxsus bolalar menyusi", time: "10:00" },
+                    { text: "Dam olish kuni chegirmalari", time: "19:00" }
+                ];
+            } else { // Yakshanba
+                tasks = [
+                    { text: "Tozalash va sanitariya", time: "08:30" },
+                    { text: "Keyingi hafta tayyorgarligi", time: "20:00" }
+                ];
+            }
+            return { tasks: tasks };
+        });
+        saveScheduleToStorage();
+    }
+
+    function saveScheduleToStorage() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(scheduleData));
+    }
+
+    // Kunlik vazifalarni qo'shish (admin ochiq bo'lsa ishlaydi)
+    function addTask(dayIndex, taskText, taskTime) {
+        if (!taskText.trim()) return false;
+        const timeVal = taskTime.trim() || "--:--";
+        scheduleData[dayIndex].tasks.push({ text: taskText.trim(), time: timeVal });
+        saveScheduleToStorage();
+        renderSchedule();      // UI ni yangilash
+        return true;
+    }
+
+    function deleteTask(dayIndex, taskIndex) {
+        scheduleData[dayIndex].tasks.splice(taskIndex, 1);
+        saveScheduleToStorage();
+        renderSchedule();
+    }
+
+    // Barcha kunlarni tozalash (admin)
+    function resetAllTasks() {
+        for (let i=0; i<scheduleData.length; i++) {
+            scheduleData[i].tasks = [];
+        }
+        saveScheduleToStorage();
+        renderSchedule();
+    }
+
+    // namunaviy rejimni yuklash (defaultdagi kabi yoki kengaytirilgan)
+    function loadExampleTasks() {
+        setDefaultSchedule();  // bu standart namunalarni yuklaydi
+        renderSchedule();
+    }
+
+    // Admin panelni ko'rinishini yangilash
+    function updateAdminUI() {
+        if (isAdminUnlocked) {
+            passwordGateDiv.style.display = "none";
+            adminToolsDiv.style.display = "block";
+            lockStatusSpan.innerHTML = '<i class="fas fa-unlock-alt"></i> Ochilgan (Admin)';
+            lockStatusSpan.style.background = "#2a9d8f30";
+        } else {
+            passwordGateDiv.style.display = "block";
+            adminToolsDiv.style.display = "none";
+            lockStatusSpan.innerHTML = '<i class="fas fa-lock"></i> Yopiq (Parol talab qilinadi)';
+            lockStatusSpan.style.background = "#e76f5130";
+            adminPasswordInput.value = ""; // xavfsizlik uchun tozalash
+        }
+    }
+
+    // Admin parolni tekshirish
+    function tryUnlock(password) {
+        // parol: fastfood2025 (yoki qo'shimcha)
+        if (password === "grenfod") {
+            isAdminUnlocked = true;
+            updateAdminUI();
+            renderSchedule(); // vazifalarni qayta render qilish (admin tugmalarini ko'rsatish uchun)
+            return true;
+        } else {
+            alert("Parol xato! Admin paneliga kirish uchun to'g'ri parolni kiriting.");
+            return false;
+        }
+    }
+
+    function lockAdmin() {
+        isAdminUnlocked = false;
+        updateAdminUI();
+        renderSchedule(); // tugmalarni yashirish uchun qayta chizish
+    }
+
+    // Kun tartibi gridini chiroyli render qilish
+    function renderSchedule() {
+        if (!scheduleGrid) return;
+        scheduleGrid.innerHTML = "";
+        for (let i = 0; i < days.length; i++) {
+            const dayName = days[i];
+            const tasksArray = scheduleData[i].tasks;
+            const card = document.createElement("div");
+            card.className = "day-card";
+            
+            // kun sarlavhasi va vazifalar soni
+            const titleDiv = document.createElement("div");
+            titleDiv.className = "day-title";
+            titleDiv.innerHTML = `<span><i class="fas fa-utensils"></i> ${dayName}</span><span class="task-count">${tasksArray.length} ta</span>`;
+            
+            const taskListUl = document.createElement("ul");
+            taskListUl.className = "task-list";
+            
+            if (tasksArray.length === 0) {
+                const emptyLi = document.createElement("li");
+                emptyLi.className = "empty-msg";
+                emptyLi.innerHTML = "<i class=></i> Hech qanday buyurma yoq. Admin qo'shishi mumkin.";
+                taskListUl.appendChild(emptyLi);
+            } else {
+                tasksArray.forEach((task, tIndex) => {
+                    const li = document.createElement("li");
+                    li.className = "task-item";
+                    li.innerHTML = `
+                        <div class="task-text"><strong>${escapeHtml(task.text)}</strong> <span class="task-time"><i class="far fa-clock"></i> ${escapeHtml(task.time)}</span></div>
+                        ${isAdminUnlocked ? `<button class="delete-task" data-day="${i}" data-task="${tIndex}"><i class="fas fa-trash-can"></i></button>` : ''}
+                    `;
+                    taskListUl.appendChild(li);
+                });
+            }
+            
+            card.appendChild(titleDiv);
+            card.appendChild(taskListUl);
+            
+            // Admin ochilgan bo'lsa, vazifa qo'shish formasi
+            if (isAdminUnlocked) {
+                const addDiv = document.createElement("div");
+                addDiv.className = "add-task-area";
+                addDiv.innerHTML = `
+                    <input type="text" placeholder="nima kerak nomi " class="task-input" id="taskInput_${i}">
+                    <input type="text" placeholder="narxi" class="task-time-input" id="taskTime_${i}" value="">
+                    <button class="add-task-btn" data-day="${i}"><i class="fas fa-plus"></i> Qo'shish</button>
+                `;
+                card.appendChild(addDiv);
+            }
+            
+            scheduleGrid.appendChild(card);
+        }
         
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        // Admin ochiq bo'lsa, qo'shish tugmalariga event listener biriktirish
+        if (isAdminUnlocked) {
+            document.querySelectorAll(".add-task-btn").forEach(btn => {
+                btn.removeEventListener("click", handleAddTask);
+                btn.addEventListener("click", handleAddTask);
+            });
+            document.querySelectorAll(".delete-task").forEach(btn => {
+                btn.removeEventListener("click", handleDeleteTask);
+                btn.addEventListener("click", handleDeleteTask);
+            });
+        }
+    }
+    
+    // Xatolik va XSS oldini olish
+    function escapeHtml(str) {
+        if (!str) return "";
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+            return c;
+        });
+    }
+    
+    function handleAddTask(event) {
+        const btn = event.currentTarget;
+        const dayIndex = parseInt(btn.getAttribute("data-day"));
+        const taskInput = document.getElementById(`taskInput_${dayIndex}`);
+        const timeInput = document.getElementById(`taskTime_${dayIndex}`);
+        if (taskInput && taskInput.value.trim() !== "") {
+            addTask(dayIndex, taskInput.value, timeInput ? timeInput.value : "");
+            taskInput.value = ""; // tozalash
+            if (timeInput) timeInput.value = "";
+        } else {
+            alert("Iltimos, vazifa matnini kiriting!");
+        }
+    }
+    
+    function handleDeleteTask(event) {
+        const btn = event.currentTarget;
+        const dayIndex = parseInt(btn.getAttribute("data-day"));
+        const taskIndex = parseInt(btn.getAttribute("data-task"));
+        if (!isNaN(dayIndex) && !isNaN(taskIndex)) {
+            deleteTask(dayIndex, taskIndex);
+        }
+    }
+    
+    // TUN/KUNDUZ rejimi (dark/light mode)
+    function initTheme() {
+        const savedTheme = localStorage.getItem(THEME_KEY);
+        if (savedTheme === "dark") {
+            document.body.classList.add("dark-mode");
+            setActiveModeBtn("dark");
+        } else {
+            document.body.classList.remove("dark-mode");
+            setActiveModeBtn("light");
+        }
+    }
+    
+    function setActiveModeBtn(mode) {
+        modeBtns.forEach(btn => {
+            const btnMode = btn.getAttribute("data-mode");
+            if (btnMode === mode) {
+                btn.classList.add("active");
+            } else {
+                btn.classList.remove("active");
+            }
+        });
+    }
+    
+    function setTheme(mode) {
+        if (mode === "dark") {
+            document.body.classList.add("dark-mode");
+            localStorage.setItem(THEME_KEY, "dark");
+            setActiveModeBtn("dark");
+        } else {
+            document.body.classList.remove("dark-mode");
+            localStorage.setItem(THEME_KEY, "light");
+            setActiveModeBtn("light");
+        }
+    }
+    
+    // ------------------------ Event Listeners ------------------------
+    function bindGlobalEvents() {
+        unlockBtn.addEventListener("click", () => {
+            const pwd = adminPasswordInput.value;
+            tryUnlock(pwd);
+        });
+        // resetAllTasksBtn.addEventListener("click", () => {
+        //     if (isAdminUnlocked && confirm("Hamma kunlardagi barcha vazifalar o'chiriladi. Davom etasizmi?")) {
+        //         resetAllTasks();
+        //     } else if (!isAdminUnlocked) alert("Admin paneli qulflangan! Avval parol bilan kiring.");
+        // });
+        // addExampleTasksBtn.addEventListener("click", () => {
+        //     if (isAdminUnlocked) {
+        //         if (confirm("Namunaviy rejim yuklanadi, avvalgi ma'lumotlar qayta yoziladi. Rozimisiz?")) {
+        //             loadExampleTasks();
+        //         }
+        //     } else {
+        //         alert("Admin paneli yopiq. Iltimos avval parol bilan kiring.");
+        //     }
+        // });
+        // lockAdminBtn.addEventListener("click", () => {
+        //     if (isAdminUnlocked) {
+        //         lockAdmin();
+        //     } else {
+        //         alert("Admin paneli allaqachon qulflangan.");
+        //     }
+        // });
+        
+        modeBtns.forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const mode = btn.getAttribute("data-mode");
+                if (mode === "dark") setTheme("dark");
+                else setTheme("light");
+            });
+        });
+        
+        // Enter tugmasi bilan parolni ochish
+        adminPasswordInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                tryUnlock(adminPasswordInput.value);
+            }
+        });
+    }
+    
+    // Boshqaruv paneli va dastlabki yuklash
+    function init() {
+        loadScheduleFromStorage();
+        initTheme();
+        bindGlobalEvents();
+        // Admin holat boshlang'ich false
+        isAdminUnlocked = false;
+        updateAdminUI();
+        renderSchedule();
+    }
+    
+    init();
+</script>
 </body>
 </html>
